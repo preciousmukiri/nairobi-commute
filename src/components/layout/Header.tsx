@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, MapPin, BarChart3, MessageSquare, User } from "lucide-react";
+import { Menu, X, MapPin, BarChart3, MessageSquare, User, LogOut } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { user, signOut } = useAuth();
 
   const navLinks = [
     { path: "/", label: "Home", icon: MapPin },
@@ -51,13 +53,29 @@ const Header = () => {
 
           {/* Actions */}
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="outline" size="sm">
-              <User className="w-4 h-4" />
-              Sign In
-            </Button>
-            <Button variant="hero" size="sm">
-              Get Started
-            </Button>
+            {user ? (
+              <>
+                <span className="text-sm text-muted-foreground">{user.email}</span>
+                <Button variant="outline" size="sm" onClick={signOut}>
+                  <LogOut className="w-4 h-4" />
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link to="/auth">
+                  <Button variant="outline" size="sm">
+                    <User className="w-4 h-4" />
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to="/auth">
+                  <Button variant="hero" size="sm">
+                    Get Started
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -89,12 +107,25 @@ const Header = () => {
                 </Link>
               ))}
               <div className="flex gap-2 mt-4 pt-4 border-t border-border">
-                <Button variant="outline" size="sm" className="flex-1">
-                  Sign In
-                </Button>
-                <Button variant="hero" size="sm" className="flex-1">
-                  Get Started
-                </Button>
+                {user ? (
+                  <Button variant="outline" size="sm" className="flex-1" onClick={signOut}>
+                    <LogOut className="w-4 h-4" />
+                    Sign Out
+                  </Button>
+                ) : (
+                  <>
+                    <Link to="/auth" className="flex-1" onClick={() => setIsMenuOpen(false)}>
+                      <Button variant="outline" size="sm" className="w-full">
+                        Sign In
+                      </Button>
+                    </Link>
+                    <Link to="/auth" className="flex-1" onClick={() => setIsMenuOpen(false)}>
+                      <Button variant="hero" size="sm" className="w-full">
+                        Get Started
+                      </Button>
+                    </Link>
+                  </>
+                )}
               </div>
             </nav>
           </div>

@@ -14,7 +14,236 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      operators: {
+        Row: {
+          company_name: string
+          created_at: string
+          email: string | null
+          id: string
+          license_number: string | null
+          phone: string | null
+          status: Database["public"]["Enums"]["operator_status"]
+          updated_at: string
+          user_id: string | null
+          vehicles_count: number | null
+        }
+        Insert: {
+          company_name: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          license_number?: string | null
+          phone?: string | null
+          status?: Database["public"]["Enums"]["operator_status"]
+          updated_at?: string
+          user_id?: string | null
+          vehicles_count?: number | null
+        }
+        Update: {
+          company_name?: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          license_number?: string | null
+          phone?: string | null
+          status?: Database["public"]["Enums"]["operator_status"]
+          updated_at?: string
+          user_id?: string | null
+          vehicles_count?: number | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      routes: {
+        Row: {
+          avg_time: number | null
+          created_at: string
+          destination: string
+          distance: number | null
+          fare: number | null
+          id: string
+          name: string
+          origin: string
+          status: Database["public"]["Enums"]["traffic_status"]
+          updated_at: string
+        }
+        Insert: {
+          avg_time?: number | null
+          created_at?: string
+          destination: string
+          distance?: number | null
+          fare?: number | null
+          id?: string
+          name: string
+          origin: string
+          status?: Database["public"]["Enums"]["traffic_status"]
+          updated_at?: string
+        }
+        Update: {
+          avg_time?: number | null
+          created_at?: string
+          destination?: string
+          distance?: number | null
+          fare?: number | null
+          id?: string
+          name?: string
+          origin?: string
+          status?: Database["public"]["Enums"]["traffic_status"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      traffic_alerts: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          latitude: number | null
+          location: string | null
+          longitude: number | null
+          reported_by: string | null
+          status: Database["public"]["Enums"]["alert_status"]
+          title: string
+          type: Database["public"]["Enums"]["alert_type"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          latitude?: number | null
+          location?: string | null
+          longitude?: number | null
+          reported_by?: string | null
+          status?: Database["public"]["Enums"]["alert_status"]
+          title: string
+          type?: Database["public"]["Enums"]["alert_type"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          latitude?: number | null
+          location?: string | null
+          longitude?: number | null
+          reported_by?: string | null
+          status?: Database["public"]["Enums"]["alert_status"]
+          title?: string
+          type?: Database["public"]["Enums"]["alert_type"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      traffic_reports: {
+        Row: {
+          avg_time: number | null
+          change_percent: number | null
+          created_at: string
+          id: string
+          latitude: number | null
+          longitude: number | null
+          reported_at: string
+          route_id: string | null
+          status: Database["public"]["Enums"]["traffic_status"]
+        }
+        Insert: {
+          avg_time?: number | null
+          change_percent?: number | null
+          created_at?: string
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          reported_at?: string
+          route_id?: string | null
+          status: Database["public"]["Enums"]["traffic_status"]
+        }
+        Update: {
+          avg_time?: number | null
+          change_percent?: number | null
+          created_at?: string
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          reported_at?: string
+          route_id?: string | null
+          status?: Database["public"]["Enums"]["traffic_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "traffic_reports_route_id_fkey"
+            columns: ["route_id"]
+            isOneToOne: false
+            referencedRelation: "routes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_reports: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          latitude: number | null
+          location: string | null
+          longitude: number | null
+          report_type: string
+          user_id: string | null
+          verified: boolean | null
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          latitude?: number | null
+          location?: string | null
+          longitude?: number | null
+          report_type: string
+          user_id?: string | null
+          verified?: boolean | null
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          latitude?: number | null
+          location?: string | null
+          longitude?: number | null
+          report_type?: string
+          user_id?: string | null
+          verified?: boolean | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +252,10 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      alert_status: "active" | "resolved"
+      alert_type: "incident" | "roadwork" | "event" | "info"
+      operator_status: "active" | "inactive" | "suspended"
+      traffic_status: "clear" | "moderate" | "congested"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +382,11 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      alert_status: ["active", "resolved"],
+      alert_type: ["incident", "roadwork", "event", "info"],
+      operator_status: ["active", "inactive", "suspended"],
+      traffic_status: ["clear", "moderate", "congested"],
+    },
   },
 } as const

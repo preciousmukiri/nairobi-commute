@@ -22,5 +22,27 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAmzRfqANZlupl7QxA2NKspFUaIU6R5CV0",
+  authDomain: "mapema-ndo-best.firebaseapp.com",
+  projectId: "mapema-ndo-best",
+  storageBucket: "mapema-ndo-best.firebasestorage.app",
+  messagingSenderId: "443651536732",
+  appId: "1:443651536732:web:836c50340f589643013399",
+  measurementId: "G-GC2CC4QBW2"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+  
   </body>
 </html>
